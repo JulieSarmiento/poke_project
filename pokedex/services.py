@@ -1,7 +1,8 @@
 import requests
 from .models import Pokemon
 
-
+## function to retrieve pokemon from 
+# the database or the api if not found
 def get_pokemon(api_id: int):
     pokemon = Pokemon.objects.filter(api_id=api_id).first()
     if pokemon:

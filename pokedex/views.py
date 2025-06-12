@@ -1,14 +1,9 @@
 from django.http import JsonResponse
+from django.shortcuts import render
+from .models import Pokemon
 from .services import get_pokemon
 
-def pokemon_detail(request, api_id: int):
-    pokemon = get_pokemon(api_id)
-    if not pokemon:
-        return JsonResponse({"error": f"Pokémon {api_id} not found"}, status=404)
-
-    return JsonResponse({
-        "name": pokemon.name,
-        "api_id": pokemon.api_id,
-        "types": pokemon.types,
-        "image_url": pokemon.image_url
-    })
+## display the list of pokemon
+def pokemon_list_api(request):
+    data = list(Pokemon.objects.all().values("api_id", "name", "types", "image_url"))
+    return JsonResponse(data, safe=False)

@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 class Pokemon(models.Model):
     name = models.CharField(max_length=100)
     api_id = models.PositiveIntegerField(unique=True)
     image_url = models.URLField(blank=True)
     types = models.CharField(max_length=100, blank=True)
 
+    ## string representation of the model, returns the name of the pokemon
     def __str__(self):
         return self.name.capitalize()
 
