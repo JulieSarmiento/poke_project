@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchData } from "../../services/api";
 
 type Pokemon = {
     api_id: number;
@@ -11,9 +13,8 @@ export default function PokemonList() {
     const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8000/pokemon/")
-            .then((response) => response.json())
-            .then((data) => setPokemons(data));
+        fetchData<Pokemon[]>("http://localhost:8000/api/pokemon/")
+            .then(setPokemons);
     }, []);
 
     return (
@@ -22,11 +23,7 @@ export default function PokemonList() {
             <ul>
                 {pokemons.map((p) => (
                     <li key={p.api_id}>
-                        <img src={p.image_url} width="100" height="100"/>
-                        <div>
-                            <h3>{p.name}</h3>
-                            <p>{p.types}</p>
-                        </div>
+                        <Link to={`/pokemon/${p.api_id}`}>{p.name}</Link>
                     </li>
                 ))}
             </ul>
